@@ -44,11 +44,12 @@
             <div style="display: flex;margin: 20px;">
                 <div class="col-md-3">
                     <h4>colors :</h4>
-                    <form class="row colors" id="colors"></form>
+                    <div class="row colors" id="colors"></div>
+                    <button type="button" class="btn btn-outline-dark button" onclick="filter();return false">Filter</button>
                 </div>
                 <div class="col-md-3">
                     <h4>title/subtitle : </h4>
-                    <input type="text" onkeyup="textFilter()" class="form-control" id="filtertxt" placeholder="title/subtitle">
+                    <input type="text" onkeyup="filter()" class="form-control" id="filtertxt" placeholder="title/subtitle">
                 </div>
             </div>
             <div class="row" style="align-items: center;">

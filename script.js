@@ -69,12 +69,12 @@ function setProgress(val) {
 //----------------------------------------------------
 //----------------------------------------------------
 
-function ColorBox(color, type, onclick) {
+function ColorBox(color, type) {
     let div = document.createElement('div');
     let input = document.createElement('input');
     let label = document.createElement('label');
     div.className = 'form-check col-md-6';
-    input.className = 'form-check-input';
+    input.className = 'form-check-input ' + type;
     input.type = type;
     input.required = true;
     input.name = 'backgroundColor';
@@ -83,6 +83,9 @@ function ColorBox(color, type, onclick) {
     label.style.background = color;
     div.appendChild(input);
     div.appendChild(label);
+    if (type == 'checkbox') {
+        input.checked = true;
+    }
     return div;
 }
 
@@ -105,7 +108,7 @@ function addCreative() {
     setProgress(PROGRESS);
 
     if (!COLORS.includes(color)) {
-        var colorBox = ColorBox(color, 'checkbox', 'filter(' + color + ')');
+        var colorBox = ColorBox(color, 'checkbox');
         colors.appendChild(colorBox);
         COLORS.push(color);
     }
@@ -118,14 +121,23 @@ function addCreative() {
 // -------------------Filters ------------------------
 //----------------------------------------------------
 
-function textFilter() {
+function filter() {
+    var array = [];
     const creatives = document.getElementsByClassName('box');
     const input = document.getElementById('filtertxt').value.toUpperCase();
+    const checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
+    for (var i = 0; i < checkboxes.length; i++) {
+        array.push(checkboxes[i].value);
+    }
     for (var i = 0; i < creatives.length; i++) {
         let title = creatives[i].getElementsByClassName('box-title')[0].textContent.toUpperCase();
         let subtitle = creatives[i].getElementsByClassName('box-subtitle')[0].textContent.toUpperCase();
-        if (title.toUpperCase().indexOf(input) > -1 || subtitle.toUpperCase().indexOf(input) > -1) {
-            creatives[i].style.display = '';
+        if (array.includes(creatives[i].className.split(' ').pop())) {
+            if (input && title.toUpperCase().indexOf(input) == -1 && subtitle.toUpperCase().indexOf(input) == -1) {
+                creatives[i].style.display = 'none';
+            } else {
+                creatives[i].style.display = '';
+            }
         } else {
             creatives[i].style.display = 'none';
         }
