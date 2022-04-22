@@ -115,6 +115,10 @@ function addCreative() {
     closeForm();
     form.elements['title'].value = '';
     form.elements['subtitle'].value = '';
+    const checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
+    for (var i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].addEventListener('change', filter);
+    }
 }
 
 //----------------------------------------------------
